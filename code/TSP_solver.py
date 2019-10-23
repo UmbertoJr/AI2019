@@ -14,7 +14,7 @@ class Solver_TSP:
         self.solved = False
         assert method in self.available_methods, f"the {method} method is not available currently."
 
-    def __call__(self, instance_, verbose=True):
+    def __call__(self, instance_, verbose=True, return_value=True):
         self.instance = instance_
         if verbose:
             print("###  solving ####")
@@ -23,7 +23,8 @@ class Solver_TSP:
         if verbose:
             print("###  solution found ####")
         self._gap()
-        return self.solution
+        if return_value:
+            return self.solution
 
     def random_method(self, instance_):
         n = int(instance_.nPoints)
