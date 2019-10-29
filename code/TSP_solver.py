@@ -32,7 +32,7 @@ class Solver_TSP:
         self.solved = True
         return self.solution
 
-    def nn(self, instance_):
+    def nn(self, instance_, starting_node=0):
         pass
 
     def plot_solution(self):
