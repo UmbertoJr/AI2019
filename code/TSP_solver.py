@@ -33,7 +33,17 @@ class Solver_TSP:
         return self.solution
 
     def nn(self, instance_, starting_node=0):
-        pass
+        dist_matrix = np.copy(instance_.dist_matrix)
+        n = int(instance_.nPoints)
+        dist_matrix[np.arange(n), np.arange(n)] = 1000
+        node = np.argmin([starting_node])
+        tour = [node]
+        for _ in range(n- 2):
+            node = np.argmin([node])
+            tour.append(node)
+        self.solution = np.array(tour)
+        self.solved = True
+        return self.solution
 
     def plot_solution(self):
         assert self.solved, "You can't plot the solution, you need to solve it first!"
