@@ -28,7 +28,8 @@ class Solver_TSP:
 
     def random_method(self, instance_):
         n = int(instance_.nPoints)
-        self.solution = np.random.choice(np.arange(n), size=n, replace=False)
+        solution = np.random.choice(np.arange(n), size=n, replace=False)
+        self.solution = np.concatenate([solution, [solution[0]]])
         self.solved = True
         return self.solution
 
