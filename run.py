@@ -3,7 +3,8 @@ import os
 
 
 def run(show_plots=False):
-    names = [name_ for name_ in os.listdir("./problems") if "tsp" in name_]
+    # names = [name_ for name_ in os.listdir("./problems") if "tsp" in name_]
+    names = ["ch130.tsp"]
     for name in names:
         print("\n\n#############################")
         filename = f"problems/{name}"
@@ -22,4 +23,4 @@ def run(show_plots=False):
 
 
 if __name__ == '__main__':
-    run()
+    run(show_plots=True)

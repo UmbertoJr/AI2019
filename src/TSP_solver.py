@@ -53,6 +53,7 @@ class Solver_TSP:
         plt.title(self.instance.name)
         ordered_points = self.instance.points[self.solution]
         plt.plot(ordered_points[:, 1], ordered_points[:, 2], 'b-')
+        plt.show()
 
     def check_if_solution_is_valid(self, solution):
         rights_values = np.sum([self.check_validation(i, solution[:-1]) for i in np.arange(self.instance.nPoints)])
