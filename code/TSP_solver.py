@@ -35,12 +35,13 @@ class Solver_TSP:
     def nn(self, instance_, starting_node=0):
         dist_matrix = np.copy(instance_.dist_matrix)
         n = int(instance_.nPoints)
-        dist_matrix[np.arange(n), np.arange(n)] = 1000
         node = np.argmin([starting_node])
         tour = [node]
-        for _ in range(n- 2):
-            node = np.argmin([node])
-            tour.append(node)
+        for _ in range(n - 2):
+            for node in np.argsort(dist_matrix[node]):
+                if node not in tour:
+                    tour.append(node)
+        tour.append(starting_node)
         self.solution = np.array(tour)
         self.solved = True
         return self.solution
