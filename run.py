@@ -14,7 +14,7 @@ def run(show_plots=False):
         if show_plots:
             instance.plot_data()
 
-        for method in ["random", "nearest_neighbors"]:
+        for method in ["random", "nearest_neighbors", "best_nn"]:
             solver = Solver_TSP(method)
             solver(instance, return_value=False)
 

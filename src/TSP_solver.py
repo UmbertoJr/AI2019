@@ -41,10 +41,12 @@ class Solver_TSP:
         n = int(instance_.nPoints)
         node = np.argmin([starting_node])
         tour = [node]
-        for _ in range(n - 2):
-            for node in np.argsort(dist_matrix[node]):
-                if node not in tour:
-                    tour.append(node)
+        for _ in range(n - 1):
+            for new_node in np.argsort(dist_matrix[node]):
+                if new_node not in tour:
+                    tour.append(new_node)
+                    node = new_node
+                    break
         tour.append(starting_node)
         self.solution = np.array(tour)
         self.solved = True
