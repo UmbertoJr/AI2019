@@ -9,7 +9,8 @@ class Solver_TSP:
     found_length: float
 
     def __init__(self, method):
-        self.available_methods = {"random": self.random_method, "nearest_neighbors": self.nn}
+        self.available_methods = {"random": self.random_method, "nearest_neighbors": self.nn,
+                                  "best_nn": self.best_nn}
         self.method = method
         self.solved = False
         assert method in self.available_methods, f"the {method} method is not available currently."
@@ -48,6 +49,19 @@ class Solver_TSP:
         self.solution = np.array(tour)
         self.solved = True
         return self.solution
+
+    def best_nn(self, instance_):
+        solutions, lens = [], []
+        for start in range(self.instance.nPoints):
+            new_solution = self.nn(instance_, starting_node=start)
+            solutions.append(new_solution)
+            assert self.check_if_solution_is_valid(new_solution), "error on best_nn method"
+            lens.append(self.evaluate_solution(return_value=True))
+
+        self.solution = solutions[np.argmin(lens)]
+        self.solved = True
+        return self.solution
+
 
     def plot_solution(self):
         assert self.solved, "You can't plot the solution, you need to solve it first!"
