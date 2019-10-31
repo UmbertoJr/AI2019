@@ -1,5 +1,5 @@
 from src import *
-import os
+from concorde.tsp import TSPSolver
 
 
 def run(show_plots=False):
@@ -14,6 +14,15 @@ def run(show_plots=False):
         if show_plots:
             instance.plot_data()
 
+        solver = TSPSolver.from_data(
+            instance.points[:, 1]*100,
+            instance.points[:, 2]*100,
+            norm="EUC_2D"
+        )
+        solution = solver.solve(verbose=False)
+        tour_opt = np.copy(solution.tour)
+
+
         for method in ["random", "nearest_neighbors", "best_nn"]:
             solver = Solver_TSP(method)
             solver(instance, return_value=False)
@@ -23,6 +32,12 @@ def run(show_plots=False):
                   f"the gap is {solver.gap} %", sep="\n")
             if show_plots:
                 solver.plot_solution()
+
+        solver.method = "optimal"
+        solver.solution = np.concatenate([tour_opt, [tour_opt[0]]])
+        solver.solved = True
+        solver.plot_solution()
+        print(solver.evaluate_solution(return_value=True))
 
 
 if __name__ == '__main__':

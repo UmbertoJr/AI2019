@@ -64,7 +64,6 @@ class Solver_TSP:
         self.solved = True
         return self.solution
 
-
     def plot_solution(self):
         assert self.solved, "You can't plot the solution, you need to solve it first!"
         plt.figure(figsize=(8, 8))

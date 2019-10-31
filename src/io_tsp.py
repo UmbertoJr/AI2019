@@ -51,7 +51,7 @@ class Instance:
     @staticmethod
     def distance_euc(zi, zj):
         xi, xj = zi[0], zj[0]
-        yi, yj = zi[0], zj[0]
+        yi, yj = zi[1], zj[1]
         return round(np.sqrt((xi - xj) ** 2 + (yi - yj) ** 2))
 
     def create_dist_matrix(self):
