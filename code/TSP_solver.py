@@ -53,7 +53,7 @@ class Solver_TSP:
         plt.plot(ordered_points[:, 1], ordered_points[:, 2], 'b-')
 
     def check_if_solution_is_valid(self, solution):
-        rights_values = np.sum([self.check_validation(i, solution) for i in np.arange(self.instance.nPoints)])
+        rights_values = np.sum([self.check_validation(i, solution[:-1]) for i in np.arange(self.instance.nPoints)])
         if rights_values == self.instance.nPoints:
             return True
         else:
