@@ -17,13 +17,13 @@ class Solver_TSP:
     def __call__(self, instance_, verbose=True, return_value=True):
         self.instance = instance_
         if verbose:
-            print(f"###  solving with {self.method}####")
+            print(f"###  solving with {self.method} ####")
         self.solution = self.available_methods[self.method](instance_)
         assert self.check_if_solution_is_valid(self.solution), "Error the solution is not valid"
         self.evaluate_solution()
         self._gap()
         if verbose:
-            print(f"###  solution found with {self.gap} ####")
+            print(f"###  solution found with {self.gap} % gap ####")
         self._gap()
         if return_value:
             return self.solution
