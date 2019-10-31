@@ -2,6 +2,7 @@ from src import *
 import pandas as pd
 from time import time as t
 
+
 def run(show_plots=False):
     # names = [name_ for name_ in os.listdir("./problems") if "tsp" in name_]
     names = ["eil76.tsp"]
@@ -26,7 +27,7 @@ def run(show_plots=False):
                   f"while the optimal length is {instance.best_sol}",
                   f"the gap is {solver.gap} %", sep="\n")
             index.append((name, method))
-            results.append([solver.found_length, instance.best_sol, solver.gap, start - end])
+            results.append([solver.found_length, instance.best_sol, solver.gap, end - start])
 
             if show_plots:
                 solver.plot_solution()
@@ -35,5 +36,6 @@ def run(show_plots=False):
 
     return pd.DataFrame(results, index=index, columns=["tour length", "optimal solution", "gap", "time to solve"])
 
+
 if __name__ == '__main__':
-    print(run(show_plots=True))
+    run(show_plots=True).to_csv("./results.csv")
