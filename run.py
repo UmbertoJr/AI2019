@@ -1,4 +1,4 @@
-from code import *
+from src import *
 import os
 
 
