@@ -39,7 +39,7 @@ class Solver_TSP:
     def nn(self, instance_, starting_node=0):
         dist_matrix = np.copy(instance_.dist_matrix)
         n = int(instance_.nPoints)
-        node = np.argmin([starting_node])
+        node = starting_node
         tour = [node]
         for _ in range(n - 1):
             for new_node in np.argsort(dist_matrix[node]):
@@ -100,4 +100,4 @@ class Solver_TSP:
 
     def _gap(self):
         self.evaluate_solution(return_value=False)
-        self.gap = np.round((self.found_length - self.instance.best_sol) / self.instance.best_sol * 100, 2)
+        self.gap = np.round(((self.found_length - self.instance.best_sol) / self.instance.best_sol) * 100, 2)

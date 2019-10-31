@@ -25,7 +25,7 @@ class Instance:
         # store data set information
         self.name = self.lines[0].split(' ')[2]
         self.nPoints = np.int(self.lines[3].split(' ')[2])
-        self.best_sol = np.int(self.lines[5].split(' ')[2])
+        self.best_sol = np.float(self.lines[5].split(' ')[2])
 
         # read all data points and store them
         self.points = np.zeros((self.nPoints, 3))
