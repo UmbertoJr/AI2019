@@ -17,11 +17,13 @@ class Solver_TSP:
     def __call__(self, instance_, verbose=True, return_value=True):
         self.instance = instance_
         if verbose:
-            print("###  solving ####")
+            print(f"###  solving with {self.method}####")
         self.solution = self.available_methods[self.method](instance_)
         assert self.check_if_solution_is_valid(self.solution), "Error the solution is not valid"
+        self.evaluate_solution()
+        self._gap()
         if verbose:
-            print("###  solution found ####")
+            print(f"###  solution found with {self.gap} ####")
         self._gap()
         if return_value:
             return self.solution
@@ -50,7 +52,7 @@ class Solver_TSP:
     def plot_solution(self):
         assert self.solved, "You can't plot the solution, you need to solve it first!"
         plt.figure(figsize=(8, 8))
-        plt.title(self.instance.name)
+        plt.title(f"{self.instance.name} with gap {self.gap}")
         ordered_points = self.instance.points[self.solution]
         plt.plot(ordered_points[:, 1], ordered_points[:, 2], 'b-')
         plt.show()
@@ -68,7 +70,7 @@ class Solver_TSP:
         else:
             return 0
 
-    def evaluate_solution(self, return_value=True):
+    def evaluate_solution(self, return_value=False):
         total_length = 0
         starting_node = self.solution[0]
         from_node = starting_node
