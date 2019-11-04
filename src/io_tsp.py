@@ -45,7 +45,7 @@ class Instance:
             # read all data points and store them
             self.optimal_tour = np.zeros(self.nPoints)
             for i in range(self.nPoints):
-                line_i = self.lines[5 + i].split(' ')
+                line_i = lines[5 + i].split(' ')
                 self.optimal_tour[0] = int(line_i[0])
 
     def print_info(self):
