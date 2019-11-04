@@ -69,7 +69,7 @@ class Solver_TSP:
         assert self.solved, "You can't plot the solution, you need to solve it first!"
         plt.figure(figsize=(8, 8))
         self._gap()
-        plt.title(f"{self.instance.name} solved with {self.method}, gap {self.gap}")
+        plt.title(f"{self.instance.name} solved with {self.method} solver, gap {self.gap}")
         ordered_points = self.instance.points[self.solution]
         plt.plot(ordered_points[:, 1], ordered_points[:, 2], 'b-')
         plt.show()

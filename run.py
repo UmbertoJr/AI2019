@@ -34,6 +34,7 @@ def run(show_plots=False):
 
         if instance.optimal_tour:
             solver.solution = np.concatenate([instance.optimal_tour, [instance.optimal_tour[0]]])
+            solver.method = "optimal"
             solver.plot_solution()
 
     index = pd.MultiIndex.from_tuples(index, names=['problem', 'method'])
