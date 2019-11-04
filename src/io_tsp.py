@@ -31,7 +31,7 @@ class Instance:
         self.points = np.zeros((self.nPoints, 3))
         for i in range(self.nPoints):
             line_i = self.lines[7 + i].split(' ')
-            self.points[i, 0] = line_i[0]
+            self.points[i, 0] = int(line_i[0])
             self.points[i, 1] = line_i[1]
             self.points[i, 2] = line_i[2]
 
