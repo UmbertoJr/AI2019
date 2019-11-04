@@ -48,7 +48,7 @@ class Instance:
             self.optimal_tour = np.zeros(self.nPoints)
             for i in range(self.nPoints):
                 line_i = lines[5 + i].split(' ')
-                self.optimal_tour[0] = int(line_i[0]) - 1
+                self.optimal_tour[i] = int(line_i[0]) - 1
 
     def print_info(self):
         print('name: ' + self.name)
