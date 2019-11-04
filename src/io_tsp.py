@@ -45,7 +45,7 @@ class Instance:
             lines = data.splitlines()
 
             # read all data points and store them
-            self.optimal_tour = np.zeros(self.nPoints)
+            self.optimal_tour = np.zeros(self.nPoints, dtype=np.int)
             for i in range(self.nPoints):
                 line_i = lines[5 + i].split(' ')
                 self.optimal_tour[i] = int(line_i[0]) - 1
