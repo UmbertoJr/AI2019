@@ -32,7 +32,7 @@ def run(show_plots=False):
             if show_plots:
                 solver.plot_solution()
 
-        if instance.optimal_tour:
+        if instance.exist_opt:
             solver.solution = np.concatenate([instance.optimal_tour, [instance.optimal_tour[0]]])
             solver.method = "optimal"
             solver.plot_solution()
