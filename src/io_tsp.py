@@ -36,6 +36,17 @@ class Instance:
             self.points[i, 2] = line_i[2]
 
         self.create_dist_matrix()
+        if [name for name in ["eil76", "kroA100"] if name in name_tsp]:
+            file_object = open(name_tsp.replace(".tsp", ".opt.tour"))
+            data = file_object.read()
+            file_object.close()
+            lines = data.splitlines()
+
+            # read all data points and store them
+            self.optimal_tour = np.zeros(self.nPoints)
+            for i in range(self.nPoints):
+                line_i = self.lines[5 + i].split(' ')
+                self.optimal_tour[0] = int(line_i[0])
 
     def print_info(self):
         print('name: ' + self.name)
