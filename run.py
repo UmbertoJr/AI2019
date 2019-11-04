@@ -32,6 +32,10 @@ def run(show_plots=False):
             if show_plots:
                 solver.plot_solution()
 
+        if instance.optimal_tour:
+            solver.solution = np.concatenate([instance.optimal_tour, [instance.optimal_tour[0]]])
+            solver.plot_solution()
+
     index = pd.MultiIndex.from_tuples(index, names=['problem', 'method'])
 
     return pd.DataFrame(results, index=index, columns=["tour length", "optimal solution", "gap", "time to solve"])

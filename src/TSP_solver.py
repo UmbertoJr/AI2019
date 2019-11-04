@@ -17,6 +17,7 @@ class Solver_TSP:
 
     def __call__(self, instance_, verbose=True, return_value=True):
         self.instance = instance_
+        self.solved = False
         if verbose:
             print(f"###  solving with {self.method} ####")
         self.solution = self.available_methods[self.method](instance_)
@@ -67,7 +68,8 @@ class Solver_TSP:
     def plot_solution(self):
         assert self.solved, "You can't plot the solution, you need to solve it first!"
         plt.figure(figsize=(8, 8))
-        plt.title(f"{self.instance.name} with gap {self.gap}")
+        self._gap()
+        plt.title(f"{self.instance.name} solved with {self.method}, gap {self.gap}")
         ordered_points = self.instance.points[self.solution]
         plt.plot(ordered_points[:, 1], ordered_points[:, 2], 'b-')
         plt.show()
