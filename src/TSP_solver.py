@@ -1,7 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 from numpy.core._multiarray_umath import ndarray
-from src.utils import *
+
 
 
 class Solver_TSP:
