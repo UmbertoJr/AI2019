@@ -6,7 +6,7 @@ from time import time as t
 def run(show_plots=False):
     # names = [name_ for name_ in os.listdir("./problems") if "tsp" in name_]
     names = ["eil76.tsp"]
-    methods = ["random", "nearest_neighbors", "best_nn"]
+    methods = ["random", "nearest_neighbors", "best_nn", ]
     results = []
     index = []
     for name in names:

@@ -11,7 +11,7 @@ class Solver_TSP:
 
     def __init__(self, method):
         self.available_methods = {"random": self.random_method, "nearest_neighbors": self.nn,
-                                  "best_nn": self.best_nn, "multi_fragment": lambda a: a }
+                                  "best_nn": self.best_nn, "multi_fragment": self.mf}
         self.method = method
         self.solved = False
         assert method in self.available_methods, f"the {method} method is not available currently."
