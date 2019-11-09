@@ -8,6 +8,8 @@ class Solver_TSP:
 
     solution: ndarray
     found_length: float
+    available_methods = {"random": lambda x: x, "nearest_neighbors": lambda x: x,
+                         "best_nn": lambda x: x, "multi_fragment": lambda x: x}
 
     def __init__(self, method):
         self.available_methods = {"random": self.random_method, "nearest_neighbors": self.nn,
