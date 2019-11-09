@@ -1,6 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 from numpy.core._multiarray_umath import ndarray
+from src.utils import *
 
 
 class Solver_TSP:
@@ -64,6 +65,35 @@ class Solver_TSP:
         self.solution = solutions[np.argmin(lens)]
         self.solved = True
         return self.solution
+
+    def mf(self, instance):
+        mat = np.copy(instance.dist_matrix)
+        mat = np.triu(mat)
+        mat[mat == 0] = 100000
+        solution = {str(i): [] for i in range(instance.nPoints)}
+        start_list = [i for i in range(instance.nPoints)]
+        inside = 0
+        for el in np.argsort(mat.flatten()):
+            node1, node2 = el // instance.nPoints, el % instance.nPoints
+            possible_edge = [node1, node2]
+            if multi_fragment.check_if_available(node1, node2, solution):
+                if multi_fragment.check_if_not_close(possible_edge, solution, instance.nPoints):
+                    # print("entrato", inside)
+                    solution[str(node1)].append(node2)
+                    solution[str(node2)].append(node1)
+                    if len(solution[str(node1)]) == 2:
+                        start_list.remove(node1)
+                    if len(solution[str(node2)]) == 2:
+                        start_list.remove(node2)
+                    inside += 1
+                    # print(node1, node2, inside)
+                    if inside == instance.nPoints - 1:
+                        # print(f"ricostruire la solutione da {start_list}",
+                        #       f"vicini di questi due nodi {[solution[str(i)] for i in start_list]}")
+                        solution = multi_fragment.create_solution(start_list, solution, instance.nPoints)
+                        self.solution = solution
+                        self.solved = True
+                        return self.solution
 
     def plot_solution(self):
         assert self.solved, "You can't plot the solution, you need to solve it first!"
