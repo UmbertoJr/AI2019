@@ -5,8 +5,8 @@ from time import time as t
 
 def run(show_plots=False):
     # names = [name_ for name_ in os.listdir("./problems") if "tsp" in name_]
-    names = ["eil76.tsp"]
-    methods = Solver_TSP.available_methods.keys() #["random", "nearest_neighbors", "best_nn", ]
+    names = ["eil76.tsp", "kroA100.tsp"]
+    methods = Solver_TSP.available_methods.keys()
     results = []
     index = []
     for name in names:
