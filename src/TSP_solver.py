@@ -8,7 +8,6 @@ else:
     from AI2019.src.utils import *
 
 
-
 class Solver_TSP:
 
     solution: ndarray
