@@ -79,7 +79,7 @@ class Solver_TSP:
             node1, node2 = el // instance.nPoints, el % instance.nPoints
             possible_edge = [node1, node2]
             if multi_fragment.check_if_available(node1, node2, solution):
-                if multi_fragment.check_if_not_close(possible_edge, solution, instance.nPoints):
+                if multi_fragment.check_if_not_close(possible_edge, solution):
                     # print("entrato", inside)
                     solution[str(node1)].append(node2)
                     solution[str(node2)].append(node1)
@@ -92,7 +92,7 @@ class Solver_TSP:
                     if inside == instance.nPoints - 1:
                         # print(f"ricostruire la solutione da {start_list}",
                         #       f"vicini di questi due nodi {[solution[str(i)] for i in start_list]}")
-                        solution = multi_fragment.create_solution(start_list, solution, instance.nPoints)
+                        solution = multi_fragment.create_solution(start_list, solution)
                         self.solution = solution
                         self.solved = True
                         return self.solution
