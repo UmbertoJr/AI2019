@@ -1,6 +1,10 @@
 import numpy as np
 from matplotlib import pyplot as plt
 from numpy.core._multiarray_umath import ndarray
+if 'AI' in os.getcwd():
+    from src.utils import *
+else:
+    from AI2019.src.utils import *
 
 
 
