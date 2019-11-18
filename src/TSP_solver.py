@@ -2,6 +2,7 @@ from numpy.core._multiarray_umath import ndarray
 import os
 from time import time as t
 import numpy as np
+import matplotlib.pyplot as plt
 if 'AI' in os.getcwd():
     from src import *
 else:
@@ -52,6 +53,7 @@ class Solver_TSP:
 
         end = t()
         self.time_to_solve = np.around(end - start,3)
+        self.solved = True
         self.evaluate_solution()
         self._gap()
         if verbose:
