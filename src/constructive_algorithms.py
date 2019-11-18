@@ -31,10 +31,10 @@ class nearest_neighbor:
         return np.array(tour)
 
     @staticmethod
-    def best_nn(self, instance_):
+    def best_nn(instance_):
         solutions, lens = [], []
         for start in range(instance_.nPoints):
-            new_solution = self.nn(instance_, starting_node=start)
+            new_solution = nearest_neighbor.nn(instance_, starting_node=start)
             solutions.append(new_solution)
             lens.append(compute_lenght(new_solution, instance_.dist_matrix))
 
