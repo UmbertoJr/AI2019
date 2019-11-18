@@ -64,7 +64,7 @@ class TwoOpt:
             if new_reward < new_len:
                 new_len = new_reward
             else:
-                return new_tsp_sequence.tolist(), new_len, uncross
+                return new_tsp_sequence.tolist()
 
         # return new_tsp_sequence.tolist(), new_len, uncross
         return new_tsp_sequence.tolist()
@@ -156,7 +156,7 @@ class TwoDotFiveOpt:
             if new_len < actual_len:
                 actual_len = new_len
             else:
-                return new_tsp_sequence.tolist(), actual_len, uncross
+                return new_tsp_sequence.tolist()
 
         # return new_tsp_sequence.tolist(), actual_len, uncross
         return new_tsp_sequence.tolist()
