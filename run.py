@@ -47,4 +47,5 @@ def run(show_plots=False, verbose=False):
 
 
 if __name__ == '__main__':
-    run(show_plots=False, verbose=True).to_csv("./results.csv")
+    df = run(show_plots=False, verbose=True)
+    df.to_csv("./results.csv")
