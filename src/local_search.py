@@ -1,5 +1,6 @@
 import os
 import numpy as np
+
 if 'AI' in os.getcwd():
     from src.utils import *
 else:
@@ -65,86 +66,97 @@ class TwoOpt:
             else:
                 return new_tsp_sequence.tolist(), new_len, uncross
 
-        return new_tsp_sequence.tolist(), new_len, uncross
+        # return new_tsp_sequence.tolist(), new_len, uncross
+        return new_tsp_sequence.tolist()
 
 
 class TwoDotFiveOpt:
 
-  @staticmethod
-  def step2dot5opt(solution, matrix_dist, distance):
-      """
+    @staticmethod
+    def step2dot5opt(solution, matrix_dist, distance):
+        """
       One step of 2opt, one double loop and return first improved sequence
       @param solution:
       @param matrix_dist:
       @param distance:
       @return:
       """
-      seq_length = len(solution) - 2
-      tsp_sequence = np.array(solution)
-      uncrosses = 0
-      for i in range(1, seq_length - 1):
-          for j in range(i + 1, seq_length):
-            # 2opt swap
-            twoOpt_tsp_sequence = TwoOpt.swap2opt(tsp_sequence, i, j)
-            twoOpt_len = distance + TwoOpt.gain(i, j , tsp_sequence, matrix_dist)
-            # node shift 1
-            first_shift_tsp_sequence = TwoDotFiveOpt.shift1(tsp_sequence, i,j)
-            first_shift_len = distance + TwoDotFiveOpt.shift_gain1(i,j, tsp_sequence, matrix_dist)
-            # node shift 2
-            second_shift_tsp_sequence = TwoDotFiveOpt.shift2(tsp_sequence, i,j)
-            second_shift_len = distance + TwoDotFiveOpt.shift_gain2(i,j, tsp_sequence, matrix_dist)
+        seq_length = len(solution) - 2
+        tsp_sequence = np.array(solution)
+        uncrosses = 0
+        for i in range(1, seq_length - 1):
+            for j in range(i + 1, seq_length):
+                # 2opt swap
+                twoOpt_tsp_sequence = TwoOpt.swap2opt(tsp_sequence, i, j)
+                twoOpt_len = distance + TwoOpt.gain(i, j, tsp_sequence, matrix_dist)
+                # node shift 1
+                first_shift_tsp_sequence = TwoDotFiveOpt.shift1(tsp_sequence, i, j)
+                first_shift_len = distance + TwoDotFiveOpt.shift_gain1(i, j, tsp_sequence, matrix_dist)
+                # node shift 2
+                second_shift_tsp_sequence = TwoDotFiveOpt.shift2(tsp_sequence, i, j)
+                second_shift_len = distance + TwoDotFiveOpt.shift_gain2(i, j, tsp_sequence, matrix_dist)
 
-            best_len, best_method = min([twoOpt_len, first_shift_len, second_shift_len]), np.argmin([twoOpt_len, first_shift_len, second_shift_len])
-            sequences = [twoOpt_tsp_sequence, first_shift_tsp_sequence, second_shift_tsp_sequence]
-            if best_len < distance:
-              uncrosses += 1
-              tsp_sequence = sequences[best_method]
-              distance = best_len
-              # print(distance, best_method, [twoOpt_len, first_shift_len, second_shift_len])
-      return tsp_sequence, distance, uncrosses
+                best_len, best_method = min([twoOpt_len, first_shift_len, second_shift_len]), np.argmin(
+                    [twoOpt_len, first_shift_len, second_shift_len])
+                sequences = [twoOpt_tsp_sequence, first_shift_tsp_sequence, second_shift_tsp_sequence]
+                if best_len < distance:
+                    uncrosses += 1
+                    tsp_sequence = sequences[best_method]
+                    distance = best_len
+                    # print(distance, best_method, [twoOpt_len, first_shift_len, second_shift_len])
+        return tsp_sequence, distance, uncrosses
 
-  @staticmethod
-  def shift1(tsp_sequence, i, j):
-    new_tsp_sequence = np.concatenate([tsp_sequence[:i], tsp_sequence[i+1: j+1], [tsp_sequence[i]], tsp_sequence[j+1:]])
-    return new_tsp_sequence
+    @staticmethod
+    def shift1(tsp_sequence, i, j):
+        new_tsp_sequence = np.concatenate(
+            [tsp_sequence[:i], tsp_sequence[i + 1: j + 1], [tsp_sequence[i]], tsp_sequence[j + 1:]])
+        return new_tsp_sequence
 
-  @staticmethod
-  def shift_gain1(i, j , tsp_sequence, matrix_dist):
-    old_link_len = (matrix_dist[tsp_sequence[i], tsp_sequence[i - 1]]+ matrix_dist[tsp_sequence[i], tsp_sequence[i + 1]] + matrix_dist[tsp_sequence[j], tsp_sequence[j + 1]])
-    changed_links_len = (matrix_dist[tsp_sequence[i - 1], tsp_sequence[i + 1]] + matrix_dist[tsp_sequence[i], tsp_sequence[j]] + matrix_dist[tsp_sequence[i], tsp_sequence[j + 1]])
-    return - old_link_len + changed_links_len
+    @staticmethod
+    def shift_gain1(i, j, tsp_sequence, matrix_dist):
+        old_link_len = (matrix_dist[tsp_sequence[i], tsp_sequence[i - 1]] + matrix_dist[
+            tsp_sequence[i], tsp_sequence[i + 1]] + matrix_dist[tsp_sequence[j], tsp_sequence[j + 1]])
+        changed_links_len = (matrix_dist[tsp_sequence[i - 1], tsp_sequence[i + 1]] + matrix_dist[
+            tsp_sequence[i], tsp_sequence[j]] + matrix_dist[tsp_sequence[i], tsp_sequence[j + 1]])
+        return - old_link_len + changed_links_len
 
-  @staticmethod
-  def shift2(tsp_sequence, i, j):
-    new_tsp_sequence = np.concatenate([tsp_sequence[:i], [tsp_sequence[j]], tsp_sequence[i: j], tsp_sequence[j+1:]])
-    return new_tsp_sequence
+    @staticmethod
+    def shift2(tsp_sequence, i, j):
+        new_tsp_sequence = np.concatenate(
+            [tsp_sequence[:i], [tsp_sequence[j]], tsp_sequence[i: j], tsp_sequence[j + 1:]])
+        return new_tsp_sequence
 
-  @staticmethod
-  def shift_gain2(i, j , tsp_sequence, matrix_dist):
-    old_link_len = (matrix_dist[tsp_sequence[i], tsp_sequence[i - 1]] + matrix_dist[tsp_sequence[j], tsp_sequence[j - 1]] + matrix_dist[tsp_sequence[j], tsp_sequence[j + 1]])
-    changed_links_len = (matrix_dist[tsp_sequence[j], tsp_sequence[i - 1]] + matrix_dist[tsp_sequence[i], tsp_sequence[j]] + matrix_dist[tsp_sequence[j - 1], tsp_sequence[j + 1]])
-    return - old_link_len + changed_links_len
+    @staticmethod
+    def shift_gain2(i, j, tsp_sequence, matrix_dist):
+        old_link_len = (matrix_dist[tsp_sequence[i], tsp_sequence[i - 1]] + matrix_dist[
+            tsp_sequence[j], tsp_sequence[j - 1]] + matrix_dist[tsp_sequence[j], tsp_sequence[j + 1]])
+        changed_links_len = (
+                matrix_dist[tsp_sequence[j], tsp_sequence[i - 1]] + matrix_dist[tsp_sequence[i], tsp_sequence[j]] +
+                matrix_dist[tsp_sequence[j - 1], tsp_sequence[j + 1]])
+        return - old_link_len + changed_links_len
 
-  @staticmethod
-  def loop2dot5opt(solution, instance, max_num_of_changes=400):  # Iterate stoep2opt max_iter times (2-opt local search)
-      """
+    @staticmethod
+    def loop2dot5opt(solution, instance,
+                     max_num_of_changes=400):  # Iterate stoep2opt max_iter times (2-opt local search)
+        """
 
       @param solution:
       @param instance:
       @param max_num_of_changes:
       @return:
       """
-      matrix_dist = instance.dist_matrix
-      actual_len = compute_lenght(solution, matrix_dist)
-      new_tsp_sequence = np.copy(np.array(solution))
-      uncross = 0
-      while uncross < max_num_of_changes:
-          new_tsp_sequence, new_len, uncr_ = TwoDotFiveOpt.step2dot5opt(new_tsp_sequence, matrix_dist, actual_len)
-          uncross += uncr_
-          # print(new_len, uncross)
-          if new_len < actual_len:
-              actual_len = new_len
-          else:
-              return new_tsp_sequence.tolist(), actual_len, uncross
-      return new_tsp_sequence.tolist(), actual_len, uncross
+        matrix_dist = instance.dist_matrix
+        actual_len = compute_lenght(solution, matrix_dist)
+        new_tsp_sequence = np.copy(np.array(solution))
+        uncross = 0
+        while uncross < max_num_of_changes:
+            new_tsp_sequence, new_len, uncr_ = TwoDotFiveOpt.step2dot5opt(new_tsp_sequence, matrix_dist, actual_len)
+            uncross += uncr_
+            # print(new_len, uncross)
+            if new_len < actual_len:
+                actual_len = new_len
+            else:
+                return new_tsp_sequence.tolist(), actual_len, uncross
 
+        # return new_tsp_sequence.tolist(), actual_len, uncross
+        return new_tsp_sequence.tolist()

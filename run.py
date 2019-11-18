@@ -23,7 +23,6 @@ def run(show_plots=False, verbose=False):
             solver = Solver_TSP(init)
             for improve in improvements:
                 solver.bind(improve)
-                end - start
                 solver(instance, return_value=False, verbose=verbose)
 
                 if verbose:
