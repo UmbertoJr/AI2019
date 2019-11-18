@@ -137,15 +137,7 @@ class TwoDotFiveOpt:
         return - old_link_len + changed_links_len
 
     @staticmethod
-    def loop2dot5opt(solution, instance,
-                     max_num_of_changes=10000):  # Iterate stoep2opt max_iter times (2-opt local search)
-        """
-
-      @param solution:
-      @param instance:
-      @param max_num_of_changes:
-      @return:
-      """
+    def loop2dot5opt(solution, instance, max_num_of_changes=10000):
         matrix_dist = instance.dist_matrix
         actual_len = compute_lenght(solution, matrix_dist)
         new_tsp_sequence = np.copy(np.array(solution))
@@ -159,5 +151,4 @@ class TwoDotFiveOpt:
             else:
                 return new_tsp_sequence.tolist()
 
-        # return new_tsp_sequence.tolist(), actual_len, uncross
         return new_tsp_sequence.tolist()
