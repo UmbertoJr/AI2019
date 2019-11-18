@@ -11,13 +11,6 @@ class TwoOpt:
 
     @staticmethod
     def step2opt(solution, matrix_dist, distance):
-        """
-        One step of 2opt, one double loop and return first improved sequence
-        @param solution:
-        @param matrix_dist:
-        @param distance:
-        @return:
-        """
         seq_length = len(solution) - 1
         tsp_sequence = np.array(solution)
         uncrosses = 0
@@ -46,15 +39,7 @@ class TwoOpt:
         return - old_link_len + changed_links_len
 
     @staticmethod
-    def loop2opt(solution, instance,
-                 max_num_of_uncrosses=10000):  # Iterate step2opt max_iter times (2-opt local search)
-        """
-
-        @param solution:
-        @param instance:
-        @param max_num_of_uncrosses:
-        @return:
-        """
+    def loop2opt(solution, instance, max_num_of_uncrosses=10000):
         matrix_dist = instance.dist_matrix
         new_len = compute_lenght(solution, matrix_dist)
         new_tsp_sequence = np.copy(np.array(solution))
@@ -75,13 +60,6 @@ class TwoDotFiveOpt:
 
     @staticmethod
     def step2dot5opt(solution, matrix_dist, distance):
-        """
-      One step of 2opt, one double loop and return first improved sequence
-      @param solution:
-      @param matrix_dist:
-      @param distance:
-      @return:
-      """
         seq_length = len(solution) - 2
         tsp_sequence = np.array(solution)
         uncrosses = 0
@@ -116,7 +94,7 @@ class TwoDotFiveOpt:
     @staticmethod
     def shift_gain1(i, j, tsp_sequence, matrix_dist):
         old_link_len = (matrix_dist[tsp_sequence[i], tsp_sequence[i - 1]] + matrix_dist[
-            tsp_sequence[i], tsp_sequence[i + 1]] + matrix_dist[tsp_sequence[j], tsp_sequence[j + 1]])
+            tsp_s   equence[i], tsp_sequence[i + 1]] + matrix_dist[tsp_sequence[j], tsp_sequence[j + 1]])
         changed_links_len = (matrix_dist[tsp_sequence[i - 1], tsp_sequence[i + 1]] + matrix_dist[
             tsp_sequence[i], tsp_sequence[j]] + matrix_dist[tsp_sequence[i], tsp_sequence[j + 1]])
         return - old_link_len + changed_links_len
