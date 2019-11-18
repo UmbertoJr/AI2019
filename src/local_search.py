@@ -46,7 +46,8 @@ class TwoOpt:
         return - old_link_len + changed_links_len
 
     @staticmethod
-    def loop2opt(solution, instance, max_num_of_uncrosses=400):  # Iterate step2opt max_iter times (2-opt local search)
+    def loop2opt(solution, instance,
+                 max_num_of_uncrosses=10000):  # Iterate step2opt max_iter times (2-opt local search)
         """
 
         @param solution:
@@ -137,7 +138,7 @@ class TwoDotFiveOpt:
 
     @staticmethod
     def loop2dot5opt(solution, instance,
-                     max_num_of_changes=400):  # Iterate stoep2opt max_iter times (2-opt local search)
+                     max_num_of_changes=10000):  # Iterate stoep2opt max_iter times (2-opt local search)
         """
 
       @param solution:
