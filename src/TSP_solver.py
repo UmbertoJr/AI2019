@@ -1,7 +1,6 @@
-import numpy as np
-from matplotlib import pyplot as plt
 from numpy.core._multiarray_umath import ndarray
 import os
+from time import time as t
 if 'AI' in os.getcwd():
     from src import *
 else:
@@ -15,93 +14,43 @@ class Solver_TSP:
     available_initializers = {"random": random_initialier.random_method,
                               "nearest_neighbors": nearest_neighbor.nn,
                               "best_nn": nearest_neighbor.best_nn,
-                              "multi_fragment": multi_fragment.mf}
+                              "multi_fragment": multi_fragment.mf
+                              }
 
-    def __init__(self, method):
+    available_improvements = {"2-opt": TwoOpt.loop2opt,
+                              "2.5-opt": TwoDotFiveOpt.loop2dot5opt}
+
+    def __init__(self, initializer):
         # self.available_methods = {"random": self.random_method, "nearest_neighbors": self.nn,
         #                           "best_nn": self.best_nn, "multi_fragment": self.mf}
-        self.method = method
+        self.initializer = initializer
+        self.methods = [initializer]
         self.solved = False
-        assert method in self.available_initializers, f"the {method} method is not available currently."
+        assert initializer in self.available_initializers, f"the {initializer} initializer is not available currently."
+
+    def bind(self, local_or_meta):
+        assert local_or_meta in self.available_improvements, f"the {local_or_meta} method is not available currently."
+        self.methods.append(local_or_meta)
 
     def __call__(self, instance_, verbose=True, return_value=True):
         self.instance = instance_
         self.solved = False
         if verbose:
-            print(f"###  solving with {self.method} ####")
-        self.solution = self.available_methods[self.method](instance_)
+            print(f"###  solving with {self.methods} ####")
+        start = t()
+        self.solution = self.available_initializers[self.methods[0]](instance_)
         assert self.check_if_solution_is_valid(self.solution), "Error the solution is not valid"
+        for i in range(1, len(self.methods)):
+            self.solution = self.available_improvements[self.methods[i]](self.solution, self.instance)
+            assert self.check_if_solution_is_valid(self.solution), "Error the solution is not valid"
+
+        end = t()
         self.evaluate_solution()
         self._gap()
         if verbose:
-            print(f"###  solution found with {self.gap} % gap ####")
-        self._gap()
+            print(f"###  solution found with {self.gap} % gap  in {np.around(end - start, 3)} seconds ####")
         if return_value:
             return self.solution
-
-    # def random_method(self, instance_):
-    #     n = int(instance_.nPoints)
-    #     solution = np.random.choice(np.arange(n), size=n, replace=False)
-    #     self.solution = np.concatenate([solution, [solution[0]]])
-    #     self.solved = True
-    #     return self.solution
-    #
-    # def nn(self, instance_, starting_node=0):
-    #     dist_matrix = np.copy(instance_.dist_matrix)
-    #     n = int(instance_.nPoints)
-    #     node = starting_node
-    #     tour = [node]
-    #     for _ in range(n - 1):
-    #         for new_node in np.argsort(dist_matrix[node]):
-    #             if new_node not in tour:
-    #                 tour.append(new_node)
-    #                 node = new_node
-    #                 break
-    #     tour.append(starting_node)
-    #     self.solution = np.array(tour)
-    #     self.solved = True
-    #     return self.solution
-    #
-    # def best_nn(self, instance_):
-    #     solutions, lens = [], []
-    #     for start in range(self.instance.nPoints):
-    #         new_solution = self.nn(instance_, starting_node=start)
-    #         solutions.append(new_solution)
-    #         assert self.check_if_solution_is_valid(new_solution), "error on best_nn method"
-    #         lens.append(self.evaluate_solution(return_value=True))
-    #
-    #     self.solution = solutions[np.argmin(lens)]
-    #     self.solved = True
-    #     return self.solution
-    #
-    # def mf(self, instance):
-    #     mat = np.copy(instance.dist_matrix)
-    #     mat = np.triu(mat)
-    #     mat[mat == 0] = 100000
-    #     solution = {str(i): [] for i in range(instance.nPoints)}
-    #     start_list = [i for i in range(instance.nPoints)]
-    #     inside = 0
-    #     for el in np.argsort(mat.flatten()):
-    #         node1, node2 = el // instance.nPoints, el % instance.nPoints
-    #         possible_edge = [node1, node2]
-    #         if multi_fragment.check_if_available(node1, node2, solution):
-    #             if multi_fragment.check_if_not_close(possible_edge, solution):
-    #                 # print("entrato", inside)
-    #                 solution[str(node1)].append(node2)
-    #                 solution[str(node2)].append(node1)
-    #                 if len(solution[str(node1)]) == 2:
-    #                     start_list.remove(node1)
-    #                 if len(solution[str(node2)]) == 2:
-    #                     start_list.remove(node2)
-    #                 inside += 1
-    #                 # print(node1, node2, inside)
-    #                 if inside == instance.nPoints - 1:
-    #                     # print(f"ricostruire la solutione da {start_list}",
-    #                     #       f"vicini di questi due nodi {[solution[str(i)] for i in start_list]}")
-    #                     solution = multi_fragment.create_solution(start_list, solution)
-    #                     self.solution = solution
-    #                     self.solved = True
-    #                     return self.solution
 
     def plot_solution(self):
         assert self.solved, "You can't plot the solution, you need to solve it first!"
