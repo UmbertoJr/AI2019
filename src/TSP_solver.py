@@ -43,9 +43,11 @@ class Solver_TSP:
         start = t()
         self.solution = self.available_initializers[self.methods[0]](instance_)
         assert self.check_if_solution_is_valid(self.solution), "Error the solution is not valid"
+        print("init ok")
         for i in range(1, len(self.methods)):
             self.solution = self.available_improvements[self.methods[i]](self.solution, self.instance)
             assert self.check_if_solution_is_valid(self.solution), "Error the solution is not valid"
+            print("improve ok")
 
         end = t()
         self.time_to_solve = np.around(end - start,3)
