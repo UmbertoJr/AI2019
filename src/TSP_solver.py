@@ -38,7 +38,7 @@ class Solver_TSP:
     def bind(self, local_or_meta):
         assert local_or_meta in self.available_improvements, f"the {local_or_meta} method is not available currently."
         self.methods.append(local_or_meta)
-        self.name_method = ", improve with " + local_or_meta
+        self.name_method += ", improve with " + local_or_meta
 
     def __call__(self, instance_, verbose=True, return_value=True):
         self.instance = instance_
