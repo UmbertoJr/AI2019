@@ -86,7 +86,7 @@ class multi_fragment:
         return return_value
 
     @staticmethod
-    def create_solution(start_sol, sol):
+    def create_solution(start_sol, sol, n):
         assert len(start_sol) == 2, "too many cities with just one link"
         end = False
         n1, n2 = start_sol
@@ -103,7 +103,8 @@ class multi_fragment:
                     #       f"possibili {sol[str(from_city)]}",
                     #       f"ultim tour {sol_list[-5:]}")
                 if iterazione > 300:
-                    end = True
+                    if len(sol_list) == n:
+                        end = True
         sol_list.append(n1)
         return sol_list
 
@@ -118,7 +119,8 @@ class multi_fragment:
         for el in np.argsort(mat.flatten()):
             node1, node2 = el // instance.nPoints, el % instance.nPoints
             possible_edge = [node1, node2]
-            if multi_fragment.check_if_available(node1, node2, solution):
+            if multi_fragment.check_if_available(node1, node2,
+                                                 solution):
                 if multi_fragment.check_if_not_close(possible_edge, solution):
                     # print("entrato", inside)
                     solution[str(node1)].append(node2)
@@ -132,6 +134,6 @@ class multi_fragment:
                     if inside == instance.nPoints - 1:
                         # print(f"ricostruire la solutione da {start_list}",
                         #       f"vicini di questi due nodi {[solution[str(i)] for i in start_list]}")
-                        solution = multi_fragment.create_solution(start_list, solution)
+                        solution = multi_fragment.create_solution(start_list, solution, instance.nPoints)
                         return solution
 
