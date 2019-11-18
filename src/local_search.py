@@ -11,7 +11,7 @@ class TwoOpt:
     def step2opt(solution, matrix_dist, distance):
         """
         One step of 2opt, one double loop and return first improved sequence
-        @param tsp_sequence:
+        @param solution:
         @param matrix_dist:
         @param distance:
         @return:
@@ -47,7 +47,7 @@ class TwoOpt:
     def loop2opt(solution, instance, max_num_of_uncrosses=400):  # Iterate step2opt max_iter times (2-opt local search)
         """
 
-        @param tsp_sequence:
+        @param solution:
         @param instance:
         @param max_num_of_uncrosses:
         @return:
@@ -73,7 +73,7 @@ class TwoDotFiveOpt:
   def step2dot5opt(solution, matrix_dist, distance):
       """
       One step of 2opt, one double loop and return first improved sequence
-      @param tsp_sequence:
+      @param solution:
       @param matrix_dist:
       @param distance:
       @return:
@@ -128,7 +128,7 @@ class TwoDotFiveOpt:
   def loop2dot5opt(solution, instance, max_num_of_changes=400):  # Iterate stoep2opt max_iter times (2-opt local search)
       """
 
-      @param tsp_sequence:
+      @param solution:
       @param instance:
       @param max_num_of_changes:
       @return:
