@@ -33,15 +33,13 @@ class nearest_neighbor:
     @staticmethod
     def best_nn(self, instance_):
         solutions, lens = [], []
-        for start in range(self.instance.nPoints):
+        for start in range(instance_.nPoints):
             new_solution = self.nn(instance_, starting_node=start)
             solutions.append(new_solution)
-            assert self.check_if_solution_is_valid(new_solution), "error on best_nn method"
-            lens.append(self.evaluate_solution(return_value=True))
+            lens.append(compute_lenght(new_solution, instance_.dist_matrix))
 
-        self.solution = solutions[np.argmin(lens)]
-        self.solved = True
-        return self.solution
+        solution = solutions[np.argmin(lens)]
+        return solution
 
 
 class multi_fragment:
