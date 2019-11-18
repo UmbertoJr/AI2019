@@ -9,5 +9,7 @@ if 'AI' in os.getcwd():
 
 else:
     from AI2019.src.utils import *
+    from AI2019.src.constructive_algorithms import *
+    from AI2019.src.local_search import *
     from AI2019.src.TSP_solver import *
     from AI2019.src.io_tsp import *
