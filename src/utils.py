@@ -1,4 +1,3 @@
-import numpy as np
 
 def compute_lenght(solution, dist_matrix):
     total_length = 0

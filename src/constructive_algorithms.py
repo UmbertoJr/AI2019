@@ -1,4 +1,5 @@
 import os
+import numpy as np
 if 'AI' in os.getcwd():
     from src.utils import *
 else:
