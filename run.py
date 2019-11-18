@@ -1,6 +1,6 @@
 from src import *
 import pandas as pd
-from time import time as t
+
 
 
 def run(show_plots=False, verbose=False):
@@ -23,6 +23,7 @@ def run(show_plots=False, verbose=False):
             solver = Solver_TSP(init)
             for improve in improvements:
                 solver.bind(improve)
+                end - start
                 solver(instance, return_value=False, verbose=verbose)
 
                 if verbose:
@@ -48,4 +49,4 @@ def run(show_plots=False, verbose=False):
 
 
 if __name__ == '__main__':
-    run(show_plots=True, verbose=True).to_csv("./results.csv")
+    run(show_plots=False, verbose=True).to_csv("./results.csv")
