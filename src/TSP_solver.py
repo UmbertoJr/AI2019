@@ -20,9 +20,11 @@ class Solver_TSP:
                               }
 
     available_improvements = {"2-opt": TwoOpt.loop2opt,
-                              "2.5-opt": TwoDotFiveOpt.loop2dot5opt,
-                              "simulated_annealing": Simulated_Annealing,
-                              "iterated_local_search": Iterated_Local_Search}
+                              "2.5-opt": TwoDotFiveOpt.loop2dot5opt}
+
+    # ,
+    #   "simulated_annealing": Simulated_Annealing,
+    #   "iterated_local_search": Iterated_Local_Search}
 
     def __init__(self, initializer):
         # self.available_methods = {"random": self.random_method, "nearest_neighbors": self.nn,
