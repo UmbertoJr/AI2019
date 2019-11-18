@@ -140,3 +140,4 @@ class multi_fragment:
                         #       f"vicini di questi due nodi {[solution[str(i)] for i in start_list]}")
                         solution = multi_fragment.create_solution(start_list, solution)
                         return solution
+
