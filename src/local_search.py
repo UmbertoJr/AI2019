@@ -93,10 +93,12 @@ class TwoDotFiveOpt:
 
     @staticmethod
     def shift_gain1(i, j, tsp_sequence, matrix_dist):
-        old_link_len = (matrix_dist[tsp_sequence[i], tsp_sequence[i - 1]] + matrix_dist[
-            tsp_s   equence[i], tsp_sequence[i + 1]] + matrix_dist[tsp_sequence[j], tsp_sequence[j + 1]])
-        changed_links_len = (matrix_dist[tsp_sequence[i - 1], tsp_sequence[i + 1]] + matrix_dist[
-            tsp_sequence[i], tsp_sequence[j]] + matrix_dist[tsp_sequence[i], tsp_sequence[j + 1]])
+        old_link_len = (matrix_dist[tsp_sequence[i], tsp_sequence[i - 1]] +
+                        matrix_dist[tsp_sequence[i], tsp_sequence[i + 1]] +
+                        matrix_dist[tsp_sequence[j], tsp_sequence[j + 1]])
+        changed_links_len = (matrix_dist[tsp_sequence[i - 1], tsp_sequence[i + 1]] +
+                             matrix_dist[tsp_sequence[i], tsp_sequence[j]]
+                             + matrix_dist[tsp_sequence[i], tsp_sequence[j + 1]])
         return - old_link_len + changed_links_len
 
     @staticmethod
