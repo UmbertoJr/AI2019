@@ -1,6 +1,7 @@
 from numpy.core._multiarray_umath import ndarray
 import os
 from time import time as t
+import numpy as np
 if 'AI' in os.getcwd():
     from src import *
 else:
@@ -25,12 +26,14 @@ class Solver_TSP:
         #                           "best_nn": self.best_nn, "multi_fragment": self.mf}
         self.initializer = initializer
         self.methods = [initializer]
+        self.name_method = "initialize with " + initializer
         self.solved = False
         assert initializer in self.available_initializers, f"the {initializer} initializer is not available currently."
 
     def bind(self, local_or_meta):
         assert local_or_meta in self.available_improvements, f"the {local_or_meta} method is not available currently."
         self.methods.append(local_or_meta)
+        self.name_method = ", improve with " + local_or_meta
 
     def __call__(self, instance_, verbose=True, return_value=True):
         self.instance = instance_
@@ -45,10 +48,11 @@ class Solver_TSP:
             assert self.check_if_solution_is_valid(self.solution), "Error the solution is not valid"
 
         end = t()
+        self.time_to_solve = np.around(end - start,3)
         self.evaluate_solution()
         self._gap()
         if verbose:
-            print(f"###  solution found with {self.gap} % gap  in {np.around(end - start, 3)} seconds ####")
+            print(f"###  solution found with {self.gap} % gap  in {self.time_to_solve} seconds ####")
         if return_value:
             return self.solution
 
@@ -56,7 +60,7 @@ class Solver_TSP:
         assert self.solved, "You can't plot the solution, you need to solve it first!"
         plt.figure(figsize=(8, 8))
         self._gap()
-        plt.title(f"{self.instance.name} solved with {self.method} solver, gap {self.gap}")
+        plt.title(f"{self.instance.name} solved with {self.name_method} solver, gap {self.gap}")
         ordered_points = self.instance.points[self.solution]
         plt.plot(ordered_points[:, 1], ordered_points[:, 2], 'b-')
         plt.show()
