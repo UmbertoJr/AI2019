@@ -2,7 +2,6 @@ from src import *
 import pandas as pd
 
 
-
 def run(show_plots=False, verbose=False):
     # names = [name_ for name_ in os.listdir("./problems") if "tsp" in name_]
     names = ["eil76.tsp", "kroA100.tsp"]
