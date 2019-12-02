@@ -40,7 +40,6 @@ class Solver_TSP:
         assert local_or_meta in self.available_improvements, f"the {local_or_meta} method is not available currently."
         self.methods.append(local_or_meta)
         self.name_method += ", improved with " + local_or_meta
-        '
 
     def pop(self):
         self.methods.pop()
