@@ -20,7 +20,8 @@ class Solver_TSP:
                               }
 
     available_improvements = {"2-opt": TwoOpt.loop2opt,
-                              "2.5-opt": TwoDotFiveOpt.loop2dot5opt}
+                              "2.5-opt": TwoDotFiveOpt.loop2dot5opt,
+                              "simulated_annealing": Simulated_Annealing.sm}
 
     # ,
     #   "simulated_annealing": Simulated_Annealing,
