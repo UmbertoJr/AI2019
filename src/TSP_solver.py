@@ -32,14 +32,20 @@ class Solver_TSP:
         #                           "best_nn": self.best_nn, "multi_fragment": self.mf}
         self.initializer = initializer
         self.methods = [initializer]
-        self.name_method = "initialize with " + initializer
+        self.name_method = "initialized with " + initializer
         self.solved = False
         assert initializer in self.available_initializers, f"the {initializer} initializer is not available currently."
 
     def bind(self, local_or_meta):
         assert local_or_meta in self.available_improvements, f"the {local_or_meta} method is not available currently."
         self.methods.append(local_or_meta)
-        self.name_method += ", improve with " + local_or_meta
+        self.name_method += ", improved with " + local_or_meta
+        '
+
+    def pop(self):
+        self.methods.pop()
+        self.name_method = self.name_method[::-1][self.name_method[::-1].find("improved"[::-1]) + len("improved") + 1:][
+                           ::-1]
 
     def __call__(self, instance_, verbose=True, return_value=True):
         self.instance = instance_

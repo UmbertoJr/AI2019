@@ -19,8 +19,8 @@ def run(show_plots=False, verbose=False):
             instance.plot_data()
 
         for init in initializers:
-            solver = Solver_TSP(init)
             for improve in improvements:
+                solver = Solver_TSP(init)
                 solver.bind(improve)
                 solver(instance, return_value=False, verbose=verbose)
 
