@@ -2,6 +2,23 @@ from src import *
 import pandas as pd
 
 
+def add(solver, instance, improve, index, results, name, verbose, show_plots):
+    solver.bind(improve)
+    solver(instance, return_value=False, verbose=verbose)
+
+    if verbose:
+        print(f"the total length for the solution found is {solver.found_length}",
+              f"while the optimal length is {instance.best_sol}",
+              f"the gap is {solver.gap}%",
+              f"the solution is found in {solver.time_to_solve} seconds", sep="\n")
+
+    index.append((name, solver.name_method))
+    results.append([solver.found_length, instance.best_sol, solver.gap, solver.time_to_solve])
+
+    if show_plots:
+        solver.plot_solution()
+
+
 def run(show_plots=False, verbose=False):
     # names = [name_ for name_ in os.listdir("./problems") if "tsp" in name_]
     names = ["eil76.tsp"]
@@ -21,20 +38,16 @@ def run(show_plots=False, verbose=False):
         for init in initializers:
             for improve in improvements:
                 solver = Solver_TSP(init)
-                solver.bind(improve)
-                solver(instance, return_value=False, verbose=verbose)
+                add(solver, instance, improve, index, results, name, verbose, show_plots)
+                for improve2 in [j for j in improvements if j not in [improve]]:
+                    add(solver, instance, improve2, index, results, name, verbose, show_plots)
 
-                if verbose:
-                    print(f"the total length for the solution found is {solver.found_length}",
-                          f"while the optimal length is {instance.best_sol}",
-                          f"the gap is {solver.gap}%",
-                          f"the solution is found in {solver.time_to_solve} seconds", sep="\n")
+                    for improve3 in [j for j in improvements if j not in [improve, improve2]]:
+                        add(solver, instance, improve3, index, results, name, verbose, show_plots)
+                        solver.pop()
 
-                index.append((name, solver.name_method))
-                results.append([solver.found_length, instance.best_sol, solver.gap, solver.time_to_solve])
+                    solver.pop()
 
-                if show_plots:
-                    solver.plot_solution()
 
         if instance.exist_opt and show_plots:
             solver.solution = np.concatenate([instance.optimal_tour, [instance.optimal_tour[0]]])
