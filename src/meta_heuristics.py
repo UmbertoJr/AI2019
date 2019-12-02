@@ -13,9 +13,9 @@ class Simulated_Annealing:
 
         # initial setup
         temperature = instance.best_sol / np.sqrt(instance.nPoints)
-        current_sol = solution
+        current_sol = np.array(solution)
         current_len = compute_lenght(solution, instance.dist_matrix)
-        best_sol = solution
+        best_sol = np.array(solution)
         best_len = current_len
 
         # main loop
@@ -41,7 +41,8 @@ class Simulated_Annealing:
     def random_sol_from_neig(solution, instance):
         i, j = np.random.choice(np.arange(1, len(solution) - 1), 2, replace=False)
         i, j = np.sort([i, j])
-        return Simulated_Annealing.swap2opt(solution, i, j), Simulated_Annealing.gain()
+        return Simulated_Annealing.swap2opt(solution, i, j), Simulated_Annealing.gain(i, j, solution,
+                                                                                      instance.dist_matrix)
 
     @staticmethod
     def swap2opt(tsp_sequence, i, j):

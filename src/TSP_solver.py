@@ -62,7 +62,7 @@ class Solver_TSP:
             print(f"###  solution found with {self.gap} % gap  in {self.time_to_solve} seconds ####")
             print(f"the total length for the solution found is {self.found_length}",
                   f"while the optimal length is {self.instance.best_sol}",
-                  f"the gap is {self.solver.gap}%",
+                  f"the gap is {self.gap}%",
                   f"the solution is found in {self.time_to_solve} seconds", sep="\n")
 
         if return_value:
