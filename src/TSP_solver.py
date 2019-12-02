@@ -43,7 +43,7 @@ class Solver_TSP:
 
     def pop(self):
         self.methods.pop()
-        self.name_method = self.name_method[::-1][self.name_method[::-1].find("improved"[::-1]) + len("improved") + 1:][
+        self.name_method = self.name_method[::-1][self.name_method[::-1].find("improved"[::-1]) + len("improved") + 2:][
                            ::-1]
 
     def __call__(self, instance_, verbose=True, return_value=True):
