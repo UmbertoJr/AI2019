@@ -67,7 +67,7 @@ class Instance:
     def distance_euc(zi, zj):
         xi, xj = zi[0], zj[0]
         yi, yj = zi[1], zj[1]
-        return round(np.sqrt((xi - xj) ** 2 + (yi - yj) ** 2))
+        return round(np.sqrt((xi - xj) ** 2 + (yi - yj) ** 2), 0)
 
     def create_dist_matrix(self):
         self.dist_matrix = np.zeros((self.nPoints, self.nPoints))
