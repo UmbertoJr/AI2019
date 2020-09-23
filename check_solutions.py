@@ -76,3 +76,4 @@ class Instance:
             for j in range(i, self.nPoints):
                 self.dist_matrix[i, j] = self.distance_euc(self.points[i][1:3], self.points[j][1:3])
         self.dist_matrix += self.dist_matrix.T
+
