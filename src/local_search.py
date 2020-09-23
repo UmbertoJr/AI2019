@@ -14,7 +14,7 @@ class TwoOpt:
         seq_length = len(solution) - 1
         tsp_sequence = np.array(solution)
         uncrosses = 0
-        for i in range(1, seq_length - 1):
+        for i in range(1, seq_length):
             for j in range(i + 1, seq_length):
                 new_tsp_sequence = TwoOpt.swap2opt(tsp_sequence, i, j)
                 new_distance = distance + TwoOpt.gain(i, j, tsp_sequence, matrix_dist)

@@ -22,8 +22,8 @@ def add(solver, instance, improve, index, results, name, verbose, show_plots):
 def run(show_plots=False, verbose=False):
     # names = [name_ for name_ in os.listdir("./problems") if "tsp" in name_]
     names = ["eil76.tsp"]
-    initializers = Solver_TSP.available_initializers.keys()
-    improvements = Solver_TSP.available_improvements.keys()
+    initializers = []  # Solver_TSP.available_initializers.keys()
+    improvements = ['simulated_annealing']  # Solver_TSP.available_improvements.keys()
     results = []
     index = []
     for name in names:
@@ -39,14 +39,14 @@ def run(show_plots=False, verbose=False):
             for improve in improvements:
                 solver = Solver_TSP(init)
                 add(solver, instance, improve, index, results, name, verbose, show_plots)
-                for improve2 in [j for j in improvements if j not in [improve]]:
-                    add(solver, instance, improve2, index, results, name, verbose, show_plots)
-
-                    for improve3 in [j for j in improvements if j not in [improve, improve2]]:
-                        add(solver, instance, improve3, index, results, name, verbose, show_plots)
-                        solver.pop()
-
-                    solver.pop()
+                # for improve2 in [j for j in improvements if j not in [improve]]:
+                #     add(solver, instance, improve2, index, results, name, verbose, show_plots)
+                #
+                #     for improve3 in [j for j in improvements if j not in [improve, improve2]]:
+                #         add(solver, instance, improve3, index, results, name, verbose, show_plots)
+                #         solver.pop()
+                #
+                #     solver.pop()
 
 
         if instance.exist_opt and show_plots:

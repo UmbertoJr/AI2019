@@ -9,9 +9,9 @@ if 'AI' in os.getcwd():
     from src.io_tsp import *
 
 else:
-    from AI2019.src.utils import *
-    from AI2019.src.constructive_algorithms import *
-    from AI2019.src.local_search import *
-    from AI2019.src.meta_heuristics import *
-    from AI2019.src.TSP_solver import *
-    from AI2019.src.io_tsp import *
+    from AI2020.src.utils import *
+    from AI2020.src.constructive_algorithms import *
+    from AI2020.src.local_search import *
+    from AI2020.src.meta_heuristics import *
+    from AI2020.src.TSP_solver import *
+    from AI2020.src.io_tsp import *

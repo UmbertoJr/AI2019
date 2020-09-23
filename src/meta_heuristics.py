@@ -9,7 +9,7 @@ else:
 class Simulated_Annealing:
 
     @staticmethod
-    def sa(solution, instance, constant_temperature=0.95, iterations_for_each_temp=100):
+    def sa(solution, instance, constant_temperature=0.95, iterations_for_each_temp=1000):
 
         # initial setup
         temperature = instance.best_sol / np.sqrt(instance.nPoints)
